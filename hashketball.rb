@@ -127,4 +127,85 @@ def game_hash
   }
 end
 
+def all_players 
+  arr = game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+
+
+def num_points_scored (player)
+  all_players.each do |player_stats|
+    if player_stats[:player_name] == player
+      return player_stats[:points]
+    end
+  end
+end
+
+def shoe_size (player)
+  all_players.each do |player_stats|
+    if player_stats[:player_name] == player
+      return player_stats[:shoe]
+    end
+  end
+end
+
+def team_colors (team)
+  game_hash.each do |k, v|
+    if v[:team_name] == team
+    return v[:colors]
+    end
+  end
+end
+
+def team_names
+ [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+end
+
+def get_team_stats (team)
+  case team
+  when game_hash[:home][:team_name]
+    game_hash[:home][:players]
+  when game_hash[:away][:team_name]
+    game_hash[:away][:players]
+  end
+end
+
+def player_numbers(team)
+  get_team_stats(team).map do |stats|
+    stats[:number]
+  end
+end
+
+def player_stats (player)
+    all_players.each do |player_stats|
+    if player_stats[:player_name] == player
+      return player_stats
+    end
+  end
+end
+
+def big_shoe_rebounds
+  largest_size = 0
+  rebounds = 0
+  all_players.each do |stats|
+    if stats[:shoe] > largest_size
+      largest_size = stats[:shoe]
+      rebounds = stats[:rebounds]
+    end
+  end
+  rebounds
+end
+
+def most_points_scored
+  highest_score = 0
+  top_scorer = ""
+  all_players.each do |stats|
+    if stats[:points] > highest_score
+      highest_score = stats[:points]
+      top_scorer = stats[:player_name]
+    end
+  end
+  top_scorer
+end
+
 # Write code here
